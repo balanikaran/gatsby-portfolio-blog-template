@@ -2,6 +2,8 @@ const path = require("path")
 
 // Here we are dynammically creating slug
 // and adding it to the node as a new field named as 'slug'
+// NOTE: this is not required for contentful posts,
+// bacause we have already predefined slugs
 module.exports.onCreateNode = ({ node, actions }) => {
     const { createNodeField } = actions
 
@@ -47,4 +49,36 @@ module.exports.createPages = async ({ graphql, actions }) => {
             },
         })
     })
+
+    // ---------------------------
+    // Further this: All the code is for Contentful blog post fetch and creating pages
+    // ---------------------------
+
+    // 1. Same as above
+    const contentfulBlogTemplate = path.resolve("./src/templates/contentfulBlog.js")
+
+    // 2. Same as above
+    const contentfulResponse = await graphql(`
+        query {
+            allContentfulBlogPost {
+                edges {
+                    node {
+                        slug
+                    }
+                }
+            }
+        }
+    `)
+
+    // 3. Same as above
+    contentfulResponse.data.allContentfulBlogPost.edges.forEach(edge => {
+        createPage({
+            component: contentfulBlogTemplate,
+            path: `/contentfulBlog/${edge.node.slug}`,
+            context: {
+                slug: edge.node.slug
+            }
+        })
+    })
+
 }

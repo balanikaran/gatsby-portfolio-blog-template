@@ -60,6 +60,15 @@ const Header = () => {
                             Blog
                         </Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/contentfulBlog"
+                            className={headerStyles.navItem}
+                            activeClassName={headerStyles.activeNavItem}
+                        >
+                            ContentfulBlog
+                        </Link>
+                    </li>
                 </ul>
             </nav>
         </header>
