@@ -6,5 +6,19 @@
 
 module.exports = {
     /* Your site config here */
-    plugins: ["gatsby-plugin-sass"],
+    siteMetadata: {
+        title: "Protofolio & Blog",
+        author: "Karan Balani",
+    },
+    plugins: [
+        "gatsby-plugin-sass",
+        {
+            resolve: "gatsby-source-filesystem",
+            options: {
+                name: "src",
+                path: `${__dirname}/src/`,
+            },
+        },
+        "gatsby-transformer-remark",
+    ],
 }
